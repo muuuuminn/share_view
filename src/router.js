@@ -12,7 +12,7 @@ export default new Router({
       component: Top,
     },
     {
-      path: '/detail',
+      path: '/detail/:song_id',
       name: 'detail',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route

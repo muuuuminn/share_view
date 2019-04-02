@@ -16,7 +16,7 @@ firebase.initializeApp({
 //   console.log(result);
 // });
 
-// //曲の一覧から選択した曲の歌詞を取得
+//曲の一覧から選択した曲の歌詞を取得
 // const song_id = '3691930';
 // const fetchLyrics = firebase.functions().httpsCallable('fetchLyrics');
 // fetchLyrics({ song_id: song_id }).then(result => {
