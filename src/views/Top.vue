@@ -11,7 +11,10 @@ import SongList from '../components/SongList';
 
 export default {
   name: 'top',
-  components: { SongSearch, SongList },
+  components: {
+    SongSearch,
+    SongList,
+  },
 };
 </script>
 
