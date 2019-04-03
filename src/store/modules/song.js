@@ -36,6 +36,7 @@ const actions = {
   fetchLyrics({ commit }, payload) {
     const fetchLyrics = firebase.functions().httpsCallable('fetchLyrics');
     fetchLyrics({ song_id: payload.song_id }).then(result => {
+      console.log(result);
       const song = {
         song_id: payload.song_id,
         full_title: payload.full_title,

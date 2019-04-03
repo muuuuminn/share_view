@@ -1,12 +1,18 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <router-view></router-view>
-  </div>
+    <MultiModalView></MultiModalView>
+  </v-app>
 </template>
 
 <script>
+import MultiModalView from './components/MultiModalView';
+
 export default {
   name: 'app',
+  components: {
+    MultiModalView,
+  },
 };
 </script>
 

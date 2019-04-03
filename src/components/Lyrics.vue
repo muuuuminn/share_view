@@ -1,10 +1,14 @@
 <template>
-  <div class="lyrics">
-    <h1>Lyrics</h1>
-    <div class="container">
-      {{ song.lyrics }}
-    </div>
-  </div>
+  <v-card flat class="container">
+    <v-card-title>
+      <h2>{{ song.full_title }}</h2>
+    </v-card-title>
+    <v-card-text class="lyrics">
+      <strong>
+        {{ song.lyrics }}
+      </strong>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -18,4 +22,11 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.lyrics {
+  height: 70vh;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-y: scroll;
+}
+</style>
