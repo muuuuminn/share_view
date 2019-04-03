@@ -6,18 +6,15 @@
         {{ song.full_title }}
       </el-button>
     </div>
-    <el-button @click="show()">Show</el-button>
-    <Modal :isVisible="isVisible" :songId="selectedSongId"></Modal>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import Modal from './Modal';
 
 export default {
   name: 'songList',
-  components: { Modal },
+  components: {},
   props: {},
   data() {
     return {
@@ -30,9 +27,10 @@ export default {
   },
   methods: {
     ...mapActions('song', ['fetchLyrics']),
+    ...mapActions('modal', ['showModalForLyrics']),
     passSongIdToModal(song) {
       this.fetchLyrics(song);
-      this.isVisible = true;
+      this.showModalForLyrics();
     },
   },
 };
