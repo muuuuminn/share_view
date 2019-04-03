@@ -1,38 +1,38 @@
 <template>
-  <div class="modalForLyrics">
-    <v-toolbar dark color="primary">
-      <v-btn icon dark @click="hideModal()">
+  <v-card class="modalForLyrics">
+    <v-toolbar color="primary">
+      <v-btn dark icon @click="hideModal()">
         <v-icon>close</v-icon>
       </v-btn>
-      <v-toolbar-title>曲詳細</v-toolbar-title>
+      <v-toolbar-title class="white--text">曲詳細</v-toolbar-title>
     </v-toolbar>
-    <h1>ModalForLyrics</h1>
-    <v-container fluid>
+    <v-container>
       <v-layout row>
-        <v-flex xs6>
+        <v-flex md6>
           <Lyrics></Lyrics>
         </v-flex>
-        <v-flex xs6>
+        <v-flex md6>
+          <Form></Form>
           <Timeline></Timeline>
         </v-flex>
       </v-layout>
     </v-container>
-  </div>
+  </v-card>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import Timeline from './Timeline';
 import Lyrics from './Lyrics';
+import Form from './Form';
 
 export default {
   name: 'ModalForLyrics',
-  components: { Timeline, Lyrics },
-  props: ['isVisible'],
+  components: { Timeline, Lyrics, Form },
   methods: {
     ...mapActions('modal', ['hideModal']),
   },
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped></style>
