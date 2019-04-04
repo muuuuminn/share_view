@@ -13,5 +13,7 @@ firebase.auth().onAuthStateChanged(user => {
       image: user.photoURL,
     };
     store.commit('auth/setUser', setUser);
+  } else {
+    store.commit('auth/setUser', null);
   }
 });

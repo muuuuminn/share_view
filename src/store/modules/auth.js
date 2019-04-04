@@ -22,6 +22,9 @@ const actions = {
     const provider = new firebase.auth.GoogleAuthProvider();
     await firebase.auth().signInWithPopup(provider);
   },
+  async logout() {
+    await firebase.auth().signOut();
+  },
 };
 
 export default {
