@@ -4,7 +4,7 @@
       <h2>{{ song.full_title }}</h2>
     </v-card-title>
     <v-card-text class="lyrics">
-      <strong>
+      <strong @mouseup="getSelectedWords()">
         {{ song.lyrics }}
       </strong>
     </v-card-text>
@@ -12,12 +12,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Lyrics',
   computed: {
     ...mapState('song', ['song']),
+  },
+  methods: {
+    ...mapMutations('form', ['setSelectedWords']),
+    getSelectedWords() {
+      this.setSelectedWords(window.getSelection().toString());
+    },
   },
 };
 </script>
