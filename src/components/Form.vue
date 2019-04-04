@@ -1,11 +1,21 @@
 <template>
-  <h1>
-    form
-  </h1>
+  <strong class="selectedWords">
+    {{ selectedWords }}
+  </strong>
 </template>
 
 <script>
-export default {};
+import { mapState } from 'vuex';
+export default {
+  computed: {
+    ...mapState('form', ['selectedWords']),
+  },
+};
 </script>
 
-<style></style>
+<style>
+.selectedWords {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+</style>
