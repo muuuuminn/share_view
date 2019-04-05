@@ -6,16 +6,16 @@
     <v-expansion-panel expand v-model="isExpand">
       <v-expansion-panel-content>
         <template v-slot:header>
-          {{ statusMessage }}
+          {{ expandMessage }}
         </template>
         <v-card-text>
           <v-form>
-            <v-textarea :value="selectedWords" label="選択中の歌詞" readonly></v-textarea>
-            <v-textarea :value="typedText" label="歌詞へのコメント" outline></v-textarea>
+            <v-textarea v-model="selectedWords" label="選択中の歌詞" readonly></v-textarea>
+            <v-textarea v-model="typedText" label="歌詞へのコメント" outline></v-textarea>
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn class="accent">投稿</v-btn>
+          <v-btn class="accent" @click="sendForm({ selectedWords, typedText, song })">投稿</v-btn>
           <v-spacer></v-spacer>
           <v-btn>クリア</v-btn>
         </v-card-actions>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 export default {
   data: () => ({
     typedText: '',
@@ -33,9 +33,13 @@ export default {
   }),
   computed: {
     ...mapState('form', ['selectedWords']),
-    statusMessage() {
+    ...mapState('song', ['song']),
+    expandMessage() {
       return this.isExpand[0] ? '閉じる' : '開く';
     },
+  },
+  methods: {
+    ...mapActions('form', ['sendForm']),
   },
 };
 </script>
