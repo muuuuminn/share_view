@@ -1,6 +1,4 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-admin.initializeApp();
 const { geniusAPI } = require('./client_secret.json');
 const Lyricist = require('lyricist/node6');
 
@@ -31,6 +29,34 @@ exports.fetchLyrics = functions.https.onCall((data, context) => {
   });
 });
 
+const admin = require('firebase-admin');
+admin.initializeApp();
+const firestore = admin.firestore();
+const DOCUMENT_PATH = 'users/{userId}/posts/{postId}';
+
+exports.copyUsersPostCreate = functions.firestore
+  .document(DOCUMENT_PATH)
+  .onCreate((snapshot, context) => {
+    copyUsersPostToRootPosts(snapshot, context);
+  });
+
+exports.copyUsersPostUpdate = functions.firestore
+  .document(DOCUMENT_PATH)
+  .onUpdate((change, context) => {
+    copyUsersPostToRootPosts(change.after, context);
+  });
+
+const copyUsersPostToRootPosts = function(snapshot, context) {
+  const postId = snapshot.id;
+  const userId = context.params.userId;
+  const post = snapshot.data();
+  post.authorRef = firestore.collection('users').doc(userId);
+  firestore
+    .collection('posts')
+    .doc(postId)
+    .set(post, { merge: true });
+};
+
 exports.copyUserToFirestore = functions.auth.user().onCreate(user => {
   console.log(user);
   const setUser = {
@@ -39,8 +65,7 @@ exports.copyUserToFirestore = functions.auth.user().onCreate(user => {
     image: '',
     createdDate: '',
   };
-  admin
-    .firestore()
+  firestore()
     .collection('users')
     .doc()
     .set(setUser)
