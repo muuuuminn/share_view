@@ -26,3 +26,4 @@ firestore.rules
 firestore.indexes.json
 .firebase
 client_secret.json
+share-lyrics-view.json
