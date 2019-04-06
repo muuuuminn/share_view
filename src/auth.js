@@ -9,13 +9,13 @@ firebase.auth().onAuthStateChanged(user => {
       user = user.user;
     }
     const setUser = {
-      id: user.uid,
+      userId: user.uid,
       name: user.displayName,
       image: user.photoURL,
       createdDate: firebase.firestore.FieldValue.serverTimestamp(),
     };
     db.collection('users')
-      .doc(setUser.id)
+      .doc(setUser.userId)
       .set(setUser);
     store.commit('auth/setUser', setUser);
   } else {
