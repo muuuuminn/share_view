@@ -8,17 +8,12 @@
         <template v-slot:header>
           {{ expandMessage }}
         </template>
-        <v-card-text>
-          <v-form>
-            <v-textarea v-model="selectedWords" label="選択中の歌詞" readonly></v-textarea>
-            <v-textarea v-model="typedText" label="歌詞へのコメント" outline></v-textarea>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
+        <v-form>
+          <v-textarea v-model="selectedWords" label="選択中の歌詞" readonly></v-textarea>
+          <v-textarea v-model="typedText" label="歌詞へのコメント" outline></v-textarea>
           <v-btn class="accent" @click="onSendForm()">投稿</v-btn>
-          <v-spacer></v-spacer>
           <v-btn>クリア</v-btn>
-        </v-card-actions>
+        </v-form>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-card>

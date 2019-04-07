@@ -10,6 +10,8 @@ exports.fetchSongs = functions.https.onCall((data, context) => {
       return {
         song_id: song.id,
         full_title: song.full_title,
+        artist_name: song.primary_artist.name,
+        song_art: song.song_art_image_thumbnail_url,
       };
     });
     return serchResult;

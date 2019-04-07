@@ -1,8 +1,10 @@
 <template>
   <v-app id="app">
-    <Navigation></Navigation>
-    <router-view></router-view>
-    <MultiModalView></MultiModalView>
+    <v-content>
+      <Navigation></Navigation>
+      <router-view></router-view>
+      <MultiModalView></MultiModalView>
+    </v-content>
   </v-app>
 </template>
 
