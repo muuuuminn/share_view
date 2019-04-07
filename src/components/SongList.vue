@@ -1,12 +1,19 @@
 <template>
-  <div class="songList">
-    <h1>songList</h1>
-    <div v-for="song in songList" :key="song.song_id">
-      <el-button @click="passSongIdToModal(song)">
-        {{ song.full_title }}
-      </el-button>
-    </div>
-  </div>
+  <v-container class="songList" grid-list-md>
+    <h1 class="primary--text display-1 font-weight-medium my-3">検索結果</h1>
+    <v-layout row wrap>
+      <v-flex v-for="song in songList" :key="song.song_id" md4>
+        <v-card hover @click="passSongIdToModal(song)">
+          <v-card-title>
+            {{ song.full_title }}
+          </v-card-title>
+          <v-card-text>
+            snipets
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

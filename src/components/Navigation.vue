@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar class="primary white--text">
+  <v-toolbar class="primary white--text" fixed>
     <v-toolbar-title>
       Share Lyrics View
     </v-toolbar-title>
