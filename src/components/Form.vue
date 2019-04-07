@@ -1,37 +1,36 @@
 <template>
-  <v-card width="40vw">
-    <v-card-title class="secondary">
-      投稿フォーム
-    </v-card-title>
-    <v-expansion-panel expand v-model="isExpand">
-      <v-expansion-panel-content>
-        <template v-slot:header>
-          {{ expandMessage }}
-        </template>
-        <v-form>
-          <v-textarea v-model="selectedWords" label="選択中の歌詞" readonly></v-textarea>
-          <v-textarea v-model="typedText" label="歌詞へのコメント" outline></v-textarea>
+  <v-card>
+    <v-card-text>
+      <v-form>
+        <v-textarea v-model="selectedWords" label="選択中の歌詞" readonly></v-textarea>
+        <v-textarea v-model="typedText" label="歌詞へのコメント" outline></v-textarea>
+        <Loading v-if="isLoading"></Loading>
+        <template v-else>
           <v-btn class="accent" @click="onSendForm()">投稿</v-btn>
-          <v-btn>クリア</v-btn>
-        </v-form>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
+          <v-btn @click="clearForm()">クリア</v-btn>
+        </template>
+      </v-form>
+    </v-card-text>
   </v-card>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import Loading from './Loading';
+
 export default {
+  components: { Loading },
   data: () => ({
     typedText: '',
-    isExpand: [],
   }),
   computed: {
     ...mapState('form', ['selectedWords']),
     ...mapState('song', ['song']),
-    expandMessage() {
-      return this.isExpand[0] ? '閉じる' : '開く';
-    },
+    ...mapState({ isLoading: 'isLoading' }),
+  },
+  mounted() {
+    this.clearSelectedWords();
+    this.typedText = '';
   },
   methods: {
     ...mapActions('form', ['sendForm', 'clearSelectedWords']),
@@ -45,16 +44,14 @@ export default {
         this.sendForm(fromInfo);
         this.clearSelectedWords();
         this.typedText = '';
-        this.isExpand = [];
       }
+    },
+    clearForm() {
+      this.clearSelectedWords();
+      this.typedText = '';
     },
   },
 };
 </script>
 
-<style>
-.selectedWords {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-</style>
+<style></style>
