@@ -1,5 +1,6 @@
 import firebase from '@/firebase';
 import db from '@/db';
+import store from '@/store';
 
 const state = {
   selectedWords: '',
@@ -16,6 +17,7 @@ const mutations = {
 
 const actions = {
   async sendForm(_, { selectedWords, typedText, song }) {
+    store.commit('loading');
     const posts = db.collection('posts');
     const result = posts.doc();
     const post = {
@@ -33,6 +35,7 @@ const actions = {
       .collection('posts')
       .doc(post.post_id)
       .set(post, { merge: true });
+    store.commit('completeLoad');
   },
   clearSelectedWords({ commit }) {
     commit('clearSelectedWords');

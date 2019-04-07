@@ -1,4 +1,5 @@
 import firebase from '@/firebase';
+import store from '@/store';
 
 const state = {
   songList: [],
@@ -28,13 +29,15 @@ const mutations = {
 
 const actions = {
   async searchSongs({ commit }, keywords) {
-    console.log(keywords);
+    store.commit('loading');
     const fetchSongs = firebase.functions().httpsCallable('fetchSongs');
     await fetchSongs({ query: keywords }).then(result => {
       commit('setSongList', result);
     });
+    store.commit('completeLoad');
   },
   async fetchLyrics({ commit }, payload) {
+    store.commit('loading');
     const fetchLyrics = firebase.functions().httpsCallable('fetchLyrics');
     await fetchLyrics({ song_id: payload.song_id }).then(result => {
       const song = {
@@ -44,6 +47,7 @@ const actions = {
       };
       commit('addLyricsToSongList', song);
       commit('setSong', song);
+      store.commit('completeLoad');
     });
   },
 };

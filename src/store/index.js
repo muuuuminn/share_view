@@ -9,8 +9,18 @@ import { vuexfireMutations } from 'vuexfire';
 
 Vue.use(Vuex);
 
+const state = {
+  isLoading: false,
+};
+
 const mutations = {
   ...vuexfireMutations,
+  loading(state) {
+    state.isLoading = true;
+  },
+  completeLoad(state) {
+    state.isLoading = false;
+  },
 };
 
 export default new Vuex.Store({
@@ -22,4 +32,5 @@ export default new Vuex.Store({
     form,
   },
   mutations,
+  state,
 });
