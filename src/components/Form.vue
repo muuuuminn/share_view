@@ -15,7 +15,7 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn class="accent" @click="sendForm({ selectedWords, typedText, song })">投稿</v-btn>
+          <v-btn class="accent" @click="onSendForm()">投稿</v-btn>
           <v-spacer></v-spacer>
           <v-btn>クリア</v-btn>
         </v-card-actions>
@@ -29,7 +29,7 @@ import { mapState, mapActions } from 'vuex';
 export default {
   data: () => ({
     typedText: '',
-    isExpand: [false],
+    isExpand: [],
   }),
   computed: {
     ...mapState('form', ['selectedWords']),
@@ -39,7 +39,20 @@ export default {
     },
   },
   methods: {
-    ...mapActions('form', ['sendForm']),
+    ...mapActions('form', ['sendForm', 'clearSelectedWords']),
+    onSendForm() {
+      if (this.selectedWords && this.typedText) {
+        const fromInfo = {
+          selectedWords: this.selectedWords,
+          typedText: this.typedText,
+          song: this.song,
+        };
+        this.sendForm(fromInfo);
+        this.clearSelectedWords();
+        this.typedText = '';
+        this.isExpand = [];
+      }
+    },
   },
 };
 </script>
