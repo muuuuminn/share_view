@@ -5,26 +5,21 @@ const Lyricist = require('lyricist/node6');
 exports.fetchSongs = functions.https.onCall((data, context) => {
   const accessToken = geniusAPI.access_token;
   const lyricist = new Lyricist(accessToken);
-  console.log(encodeURI(data.query));
   return lyricist.search(encodeURI(data.query)).then(songs => {
-    console.log(songs);
     const serchResult = songs.map(song => {
       return {
         song_id: song.id,
         full_title: song.full_title,
       };
     });
-    console.log(serchResult);
     return serchResult;
   });
 });
 
 exports.fetchLyrics = functions.https.onCall((data, context) => {
-  console.log(data);
   const accessToken = geniusAPI.access_token;
   const lyricist = new Lyricist(accessToken);
   return lyricist.song(data.song_id, { fetchLyrics: true }).then(lyrics => {
-    console.log(lyrics);
     return lyrics;
   });
 });
@@ -32,7 +27,7 @@ exports.fetchLyrics = functions.https.onCall((data, context) => {
 const admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore();
-const DOCUMENT_PATH = 'users/{userId}/posts/{postId}';
+const DOCUMENT_PATH = 'users/{user_id}/posts/{post_id}';
 
 exports.copyUsersPostCreate = functions.firestore
   .document(DOCUMENT_PATH)
@@ -47,36 +42,12 @@ exports.copyUsersPostUpdate = functions.firestore
   });
 
 const copyUsersPostToRootPosts = function(snapshot, context) {
-  const postId = snapshot.id;
-  const userId = context.params.userId;
+  const post_id = snapshot.id;
+  const user_id = context.params.user_id;
   const post = snapshot.data();
-  post.authorRef = firestore.collection('users').doc(userId);
+  post.authorRef = firestore.collection('users').doc(user_id);
   firestore
     .collection('posts')
-    .doc(postId)
+    .doc(post_id)
     .set(post, { merge: true });
 };
-
-exports.copyUserToFirestore = functions.auth.user().onCreate(user => {
-  console.log(user);
-  const setUser = {
-    id: '',
-    name: '',
-    image: '',
-    createdDate: '',
-  };
-  firestore()
-    .collection('users')
-    .doc()
-    .set(setUser)
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
-
-exports.deleteUserFromFirestore = functions.auth.user().onDelete(user => {
-  console.log(user);
-});
