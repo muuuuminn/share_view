@@ -9,10 +9,13 @@ const mutations = {
   setSelectedWords(state, payload) {
     state.selectedWords = payload;
   },
+  clearSelectedWords(state) {
+    state.selectedWords = '';
+  },
 };
 
 const actions = {
-  sendForm(_, { selectedWords, typedText, song }) {
+  async sendForm(_, { selectedWords, typedText, song }) {
     const posts = db.collection('posts');
     const result = posts.doc();
     const post = {
@@ -25,11 +28,14 @@ const actions = {
     };
     const uid = firebase.auth().currentUser.uid;
     const users = db.collection('users');
-    users
+    await users
       .doc(uid)
       .collection('posts')
       .doc(post.post_id)
       .set(post, { merge: true });
+  },
+  clearSelectedWords({ commit }) {
+    commit('clearSelectedWords');
   },
 };
 
