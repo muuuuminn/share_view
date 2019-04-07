@@ -1,7 +1,11 @@
 <template>
   <v-app id="top" v-if="isLoggedin">
-    <SongSearch></SongSearch>
-    <SongList></SongList>
+    <v-layout row wrap>
+      <v-flex text-xs-center>
+        <SongSearch></SongSearch>
+        <SongList></SongList>
+      </v-flex>
+    </v-layout>
   </v-app>
   <v-app v-else>Not Login</v-app>
 </template>
