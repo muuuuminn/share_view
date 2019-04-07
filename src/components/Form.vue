@@ -1,16 +1,24 @@
 <template>
   <v-card>
-    <v-card-text>
-      <v-form>
-        <v-textarea v-model="selectedWords" label="選択中の歌詞" readonly></v-textarea>
-        <v-textarea v-model="typedText" label="歌詞へのコメント" outline></v-textarea>
-        <Loading v-if="isLoading"></Loading>
-        <template v-else>
-          <v-btn class="accent" @click="onSendForm()">投稿</v-btn>
-          <v-btn @click="clearForm()">クリア</v-btn>
-        </template>
-      </v-form>
-    </v-card-text>
+    <template v-if="isLoggedin">
+      <v-card-text>
+        <v-form>
+          <v-textarea v-model="selectedWords" label="選択中の歌詞" readonly></v-textarea>
+          <v-textarea v-model="typedText" label="歌詞へのコメント" outline></v-textarea>
+          <Loading v-if="isLoading"></Loading>
+          <template v-else>
+            <v-btn class="accent" @click="onSendForm()">投稿</v-btn>
+            <v-btn @click="clearForm()">クリア</v-btn>
+          </template>
+        </v-form>
+      </v-card-text>
+    </template>
+    <template v-else>
+      <v-card-title>投稿するにはログインする必要があります。</v-card-title>
+      <v-card-actions>
+        <v-btn class="primary">ログイン</v-btn>
+      </v-card-actions>
+    </template>
   </v-card>
 </template>
 
@@ -26,6 +34,7 @@ export default {
   computed: {
     ...mapState('form', ['selectedWords']),
     ...mapState('song', ['song']),
+    ...mapState('auth', ['isLoggedin']),
     ...mapState({ isLoading: 'isLoading' }),
   },
   mounted() {
