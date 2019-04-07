@@ -27,15 +27,16 @@ const mutations = {
 };
 
 const actions = {
-  querySongs({ commit }, { keywords }) {
+  async searchSongs({ commit }, keywords) {
+    console.log(keywords);
     const fetchSongs = firebase.functions().httpsCallable('fetchSongs');
-    fetchSongs({ query: keywords }).then(result => {
+    await fetchSongs({ query: keywords }).then(result => {
       commit('setSongList', result);
     });
   },
-  fetchLyrics({ commit }, payload) {
+  async fetchLyrics({ commit }, payload) {
     const fetchLyrics = firebase.functions().httpsCallable('fetchLyrics');
-    fetchLyrics({ song_id: payload.song_id }).then(result => {
+    await fetchLyrics({ song_id: payload.song_id }).then(result => {
       const song = {
         song_id: payload.song_id,
         full_title: payload.full_title,
