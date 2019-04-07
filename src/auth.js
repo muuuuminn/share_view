@@ -3,19 +3,18 @@ import store from '@/store';
 import db from '@/db';
 
 firebase.auth().onAuthStateChanged(user => {
-  console.log(user);
   if (user) {
     if (user.user) {
       user = user.user;
     }
     const setUser = {
-      userId: user.uid,
+      user_id: user.uid,
       name: user.displayName,
       image: user.photoURL,
-      createdDate: firebase.firestore.FieldValue.serverTimestamp(),
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
     };
     db.collection('users')
-      .doc(setUser.userId)
+      .doc(setUser.user_id)
       .set(setUser);
     store.commit('auth/setUser', setUser);
   } else {

@@ -13,22 +13,22 @@ const mutations = {
 
 const actions = {
   sendForm(_, { selectedWords, typedText, song }) {
-    const users = db.collection('users');
     const posts = db.collection('posts');
     const result = posts.doc();
     const post = {
-      postId: result.id,
-      createdDate: firebase.firestore.FieldValue.serverTimestamp(),
-      updatedDate: firebase.firestore.FieldValue.serverTimestamp(),
+      post_id: result.id,
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+      updated_at: firebase.firestore.FieldValue.serverTimestamp(),
       lyrics: selectedWords,
       view: typedText,
-      songId: song.song_id,
+      song_id: song.song_id,
     };
     const uid = firebase.auth().currentUser.uid;
+    const users = db.collection('users');
     users
       .doc(uid)
       .collection('posts')
-      .doc(post.postId)
+      .doc(post.post_id)
       .set(post, { merge: true });
   },
 };

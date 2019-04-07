@@ -1,25 +1,21 @@
+import { firestoreAction } from 'vuexfire';
+import db from '@/db';
+
+const posts = db.collection('posts');
+
 const state = {
-  test: [],
-};
-
-const getters = {
-  test: state => data => {
-    return state;
-  },
-};
-
-const mutations = {
-  test(state, payload) {},
+  posts: [],
 };
 
 const actions = {
-  async test({ commit }) {},
+  fetchPosts: firestoreAction(({ bindFirestoreRef }, song_id) => {
+    const query = posts.where('song_id', '==', song_id);
+    bindFirestoreRef('posts', query);
+  }),
 };
 
 export default {
   namespaced: true,
   state,
-  getters,
-  mutations,
   actions,
 };
