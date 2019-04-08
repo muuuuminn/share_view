@@ -16,7 +16,7 @@
     <template v-else>
       <v-card-title>投稿するにはログインする必要があります。</v-card-title>
       <v-card-actions>
-        <v-btn class="primary">ログイン</v-btn>
+        <v-btn class="primary" @click="login()">ログイン</v-btn>
       </v-card-actions>
     </template>
   </v-card>
@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     ...mapActions('form', ['sendForm', 'clearSelectedWords']),
+    ...mapActions('auth', ['login']),
     onSendForm() {
       if (this.selectedWords && this.typedText) {
         const fromInfo = {

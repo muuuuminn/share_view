@@ -3,7 +3,7 @@
     <v-card-title>
       <h2>{{ song.full_title }}</h2>
     </v-card-title>
-    <v-card-text class="lyrics" @mouseup="getSelectedWords()">
+    <v-card-text class="lyrics font-italic" @mouseup="getSelectedWords()">
       <strong>
         {{ song.lyrics }}
       </strong>

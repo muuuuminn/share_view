@@ -7,6 +7,12 @@ const state = {
   posts: [],
 };
 
+const getters = {
+  sortPosts: state => {
+    return state.posts;
+  },
+};
+
 const actions = {
   fetchPosts: firestoreAction(({ bindFirestoreRef }, song_id) => {
     const query = posts.where('song_id', '==', song_id);
