@@ -4,6 +4,7 @@ import store from '@/store';
 const state = {
   songList: [],
   song: {},
+  message: '',
 };
 
 const getters = {
@@ -14,7 +15,7 @@ const getters = {
 
 const mutations = {
   setSongList(state, payload) {
-    state.songList = payload.data;
+    state.songList = payload;
   },
   setSong(state, payload) {
     state.song = payload;
@@ -25,6 +26,12 @@ const mutations = {
       targetSong.lyrics = payload.lyrics;
     }
   },
+  setMessage(state) {
+    state.message = '申し訳ありませんが、検索結果が見つかりませんでした。';
+  },
+  clearMessage(state) {
+    state.message = '';
+  },
 };
 
 const actions = {
@@ -32,7 +39,12 @@ const actions = {
     store.commit('loading');
     const fetchSongs = firebase.functions().httpsCallable('fetchSongs');
     await fetchSongs({ query: keywords }).then(result => {
-      commit('setSongList', result);
+      if (result.data.length != 0) {
+        commit('clearMessage');
+        commit('setSongList', result.data);
+      } else {
+        commit('setMessage');
+      }
     });
     store.commit('completeLoad');
   },

@@ -6,6 +6,11 @@
           <Loading></Loading>
         </v-flex>
       </template>
+      <template v-else-if="message">
+        <v-flex class="ma-5">
+          <h2 class="warning--text">{{ message }}</h2>
+        </v-flex>
+      </template>
       <template v-else>
         <v-flex v-for="song in songList" :key="song.song_id" md3>
           <v-card class="ma-1" @click="passSongIdToModal(song)" hover>
@@ -47,7 +52,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('song', ['songList']),
+    ...mapState('song', ['songList', 'message']),
     ...mapState({ isLoading: 'isLoading' }),
   },
   methods: {
