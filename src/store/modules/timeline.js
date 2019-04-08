@@ -9,7 +9,9 @@ const state = {
 
 const getters = {
   sortPosts: state => {
-    return state.posts;
+    return state.posts.sort(function(a, b) {
+      return b.created_at.toDate().getTime() - a.created_at.toDate().getTime();
+    });
   },
 };
 
@@ -24,4 +26,5 @@ export default {
   namespaced: true,
   state,
   actions,
+  getters,
 };
