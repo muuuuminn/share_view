@@ -1,6 +1,6 @@
 <template>
   <v-list class="timeline" three-line>
-    <template v-for="(post, index) in posts">
+    <template v-for="(post, index) in sortPosts">
       <v-list-tile :key="post.post_id" avatar>
         <v-list-tile-avatar>
           <v-avatar>
@@ -28,12 +28,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Timeline',
   computed: {
     ...mapState('timeline', ['posts']),
+    ...mapGetters('timeline', ['sortPosts']),
     ...mapState('song', ['song']),
   },
   watch: {
