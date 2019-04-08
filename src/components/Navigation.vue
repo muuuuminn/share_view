@@ -3,6 +3,11 @@
     <v-toolbar-title>
       Share Lyrics View
     </v-toolbar-title>
+    <v-btn class="" :href="github.url" target="_blank" rel="noopener" icon flat>
+      <v-icon>
+        {{ github.icon }}
+      </v-icon>
+    </v-btn>
     <v-spacer></v-spacer>
     <template v-if="isLoggedin">
       <v-avatar class="mr-2">
@@ -18,6 +23,14 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 export default {
+  data() {
+    return {
+      github: {
+        url: 'https://github.com/muuuuminn/share_view',
+        icon: 'fab fa-github',
+      },
+    };
+  },
   computed: {
     ...mapState('auth', ['user', 'isLoggedin']),
   },
