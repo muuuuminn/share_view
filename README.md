@@ -1,34 +1,14 @@
-# share_view
 
-## Project setup
-```
-yarn install
-```
+See [Demo](https://share-lyrics-view.firebaseapp.com/).
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
 
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your unit tests
-```
-yarn run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Vue
+- Vuex
+- Vuetify
+- Firebase
+  - Authentication
+  - Firestore
+  - Hosting
+  - Functions
+- GeniusAPI
+- lyricist
