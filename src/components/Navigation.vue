@@ -14,6 +14,7 @@
         <img :src="user.image" alt="プロフィール画像" />
       </v-avatar>
       <figcaption>{{ user.name }}</figcaption>
+      <v-btn dark flat @click="showModalForUser()">マイページ</v-btn>
       <v-btn dark flat @click="logout()">ログアウト</v-btn>
     </template>
     <v-btn dark flat @click="login()" v-else>ログイン</v-btn>
@@ -36,6 +37,7 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login', 'logout']),
+    ...mapActions('modal', ['showModalForUser']),
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     v-model="isShow"
-    :fullscreen="modalName == 'ModalForLyrics'"
+    :fullscreen="isFullscreen"
     transition="dialog-bottom-transition"
     hide-overlay
   >
@@ -12,11 +12,12 @@
 <script>
 import { mapState } from 'vuex';
 import ModalForLyrics from './ModalForLyrics';
+import ModalForUser from './ModalForUser';
 export default {
   name: 'MultiModalView',
-  components: { ModalForLyrics },
+  components: { ModalForLyrics, ModalForUser },
   computed: {
-    ...mapState('modal', ['modalName']),
+    ...mapState('modal', ['modalName', 'isFullscreen']),
     isShow() {
       return this.modalName !== '';
     },
