@@ -11,6 +11,7 @@
         <v-flex md6>
           <Loading v-if="isLoading" class="ml-4 mt-5"></Loading>
           基本情報
+          <v-btn @click="fetchUsersPosts(user)">押す</v-btn>
         </v-flex>
         <v-flex md6>
           <v-tabs v-model="tabs" centered>
@@ -19,6 +20,7 @@
           </v-tabs>
           <v-tabs-items v-model="tabs">
             <v-tab-item>
+              {{ usersPosts }}
               あなたの投稿
             </v-tab-item>
             <v-tab-item>
@@ -43,9 +45,12 @@ export default {
   },
   computed: {
     ...mapState({ isLoading: 'isLoading' }),
+    ...mapState('myPosts', ['usersPosts']),
+    ...mapState('auth', ['user']),
   },
   methods: {
     ...mapActions('modal', ['hideModal']),
+    ...mapActions('myPosts', ['fetchUsersPosts']),
   },
 };
 </script>
