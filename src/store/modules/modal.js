@@ -1,5 +1,6 @@
 const state = {
   modalName: '',
+  isFullscreen: true,
 };
 
 const mutations = {

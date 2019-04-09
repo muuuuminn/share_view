@@ -13,7 +13,7 @@
       </template>
       <template v-else>
         <v-flex v-for="song in songList" :key="song.song_id" md3>
-          <v-card class="ma-1" @click="passSongIdToModal(song)" hover>
+          <v-card class="ma-1" @click="openModalWithSong(song)" hover>
             <v-responsive :aspect-ratio="1">
               <v-img :src="song.song_art" :gradient="gradient">
                 <v-container fill-height>
@@ -58,7 +58,7 @@ export default {
   methods: {
     ...mapActions('song', ['fetchLyrics']),
     ...mapActions('modal', ['showModalForLyrics']),
-    passSongIdToModal(song) {
+    openModalWithSong(song) {
       this.fetchLyrics(song);
       this.showModalForLyrics();
     },
