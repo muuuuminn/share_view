@@ -5,7 +5,7 @@ import song from './modules/song';
 import timeline from './modules/timeline';
 import modal from './modules/modal';
 import form from './modules/form';
-import myPosts from './modules/myPosts';
+import usersPosts from './modules/usersPosts';
 import { vuexfireMutations } from 'vuexfire';
 
 Vue.use(Vuex);
@@ -31,7 +31,7 @@ export default new Vuex.Store({
     timeline,
     modal,
     form,
-    myPosts,
+    usersPosts,
   },
   mutations,
   state,
