@@ -15,7 +15,9 @@
               マイプロフィール
             </v-card-title>
             <v-card-media>
-              {{ user.image }}
+              <v-avatar class="mr-2">
+                <img :src="user.image" alt="プロフィール画像" />
+              </v-avatar>
             </v-card-media>
             <v-card-text>
               {{ user.name }}
