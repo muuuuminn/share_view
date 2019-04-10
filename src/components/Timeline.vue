@@ -20,7 +20,7 @@
             </span>
             <v-spacer></v-spacer>
             {{ post.created_at.toDate().toLocaleString() }}
-            <!-- <v-icon color="red" @click="deletePost(post.post_id)" small>delete</v-icon> -->
+            <v-icon color="red" @click="onDeletePost(post)" small>delete</v-icon>
           </v-list-tile-sub-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -57,7 +57,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions('timeline', ['fetchPosts']),
+    ...mapActions('timeline', ['fetchPosts', 'deletePost']),
+    onDeletePost(post) {
+      const isDelete = confirm(`${post.view}を削除しますか`);
+      if (isDelete) {
+        this.deletePost(post.post_id);
+      }
+    },
   },
 };
 </script>
