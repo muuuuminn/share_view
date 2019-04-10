@@ -10,21 +10,29 @@
       <v-layout wrap row>
         <v-flex md6>
           <Loading v-if="isLoading" class="ml-4 mt-5"></Loading>
-          基本情報
-          <v-btn @click="fetchUsersPosts(user)">押す</v-btn>
+          <v-card>
+            <v-card-title>
+              マイプロフィール
+            </v-card-title>
+            <v-card-media>
+              {{ user.image }}
+            </v-card-media>
+            <v-card-text>
+              {{ user.name }}
+            </v-card-text>
+          </v-card>
         </v-flex>
         <v-flex md6>
           <v-tabs v-model="tabs" centered>
-            <v-tab> 投稿一覧 </v-tab>
-            <v-tab> 投稿フォーム </v-tab>
+            <v-tab> 自分の過去の投稿 </v-tab>
+            <v-tab> 開発中 </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tabs">
             <v-tab-item>
-              {{ usersPosts }}
-              あなたの投稿
+              <Timeline></Timeline>
             </v-tab-item>
             <v-tab-item>
-              なにか情報
+              <h2 class="warning--text">開発中</h2>
             </v-tab-item>
           </v-tabs-items>
         </v-flex>
@@ -36,21 +44,25 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import Loading from './Loading';
+import Timeline from './Timeline';
 
 export default {
   name: 'ModalForUser',
-  components: { Loading },
+  components: { Loading, Timeline },
   data() {
     return { tabs: 0 };
   },
+  mounted() {
+    this.fetchUsersPosts(this.user);
+  },
   computed: {
     ...mapState({ isLoading: 'isLoading' }),
-    ...mapState('myPosts', ['usersPosts']),
+    ...mapState('usersPosts', ['usersPosts']),
     ...mapState('auth', ['user']),
   },
   methods: {
     ...mapActions('modal', ['hideModal']),
-    ...mapActions('myPosts', ['fetchUsersPosts']),
+    ...mapActions('usersPosts', ['fetchUsersPosts']),
   },
 };
 </script>

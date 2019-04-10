@@ -1,10 +1,10 @@
 <template>
   <v-list class="timeline" three-line>
-    <template v-for="(post, index) in sortPosts">
+    <template v-for="(post, index) in posts">
       <v-list-tile :key="post.post_id" avatar>
         <v-list-tile-avatar>
           <v-avatar>
-            <v-img :src="post.authorRef.image"></v-img>
+            <v-img :src="post.authorRef ? post.authorRef.image : user.image"></v-img>
           </v-avatar>
         </v-list-tile-avatar>
         <v-list-tile-content>
@@ -15,7 +15,9 @@
             {{ post.view }}
           </v-list-tile-sub-title>
           <v-list-tile-sub-title>
-            {{ post.authorRef.name }}
+            <span>
+              {{ post.authorRef ? post.authorRef.name : user.name }}
+            </span>
             <v-spacer></v-spacer>
             {{ post.created_at.toDate().toLocaleString() }}
             <!-- <v-icon color="red" @click="deletePost(post.post_id)" small>delete</v-icon> -->
@@ -33,9 +35,21 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 export default {
   name: 'Timeline',
   computed: {
-    ...mapState('timeline', ['posts']),
-    ...mapGetters('timeline', ['sortPosts']),
+    ...mapState('auth', ['user']),
     ...mapState('song', ['song']),
+    ...mapGetters('timeline', ['sortPosts']),
+    ...mapGetters('usersPosts', ['sortUsersPosts']),
+    ...mapState('modal', ['modalName']),
+    posts() {
+      switch (this.modalName) {
+        case 'ModalForLyrics':
+          return this.sortPosts;
+        case 'ModalForUser':
+          return this.sortUsersPosts;
+        default:
+          return '';
+      }
+    },
   },
   watch: {
     song() {

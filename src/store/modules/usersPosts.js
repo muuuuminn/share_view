@@ -6,7 +6,13 @@ const users = db.collection('users');
 const state = {
   usersPosts: [],
 };
-const getters = {};
+const getters = {
+  sortUsersPosts: state => {
+    return state.usersPosts.sort(function(a, b) {
+      return b.created_at.toDate().getTime() - a.created_at.toDate().getTime();
+    });
+  },
+};
 const mutations = {};
 const actions = {
   fetchUsersPosts: firestoreAction(({ bindFirestoreRef }, user) => {
