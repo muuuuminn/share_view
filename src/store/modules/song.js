@@ -1,6 +1,9 @@
 import firebase from '@/firebase';
 import store from '@/store';
 
+const NOT_FOUND = '申し訳ありませんが、検索結果が見つかりませんでした。';
+const KEYWORDS_REQUIRED = 'キーワードを入力してください。';
+
 const state = {
   songList: [],
   song: {},
@@ -26,8 +29,8 @@ const mutations = {
       targetSong.lyrics = payload.lyrics;
     }
   },
-  setMessage(state) {
-    state.message = '申し訳ありませんが、検索結果が見つかりませんでした。';
+  setMessage(state, payload) {
+    state.message = payload;
   },
   clearMessage(state) {
     state.message = '';
@@ -37,15 +40,19 @@ const mutations = {
 const actions = {
   async searchSongs({ commit }, keywords) {
     store.commit('loading');
-    const fetchSongs = firebase.functions().httpsCallable('fetchSongs');
-    await fetchSongs({ query: keywords }).then(result => {
-      if (result.data.length != 0) {
-        commit('clearMessage');
-        commit('setSongList', result.data);
-      } else {
-        commit('setMessage');
-      }
-    });
+    if (keywords) {
+      const fetchSongs = firebase.functions().httpsCallable('fetchSongs');
+      await fetchSongs({ query: keywords }).then(result => {
+        if (result.data.length != 0) {
+          commit('clearMessage');
+          commit('setSongList', result.data);
+        } else {
+          commit('setMessage', NOT_FOUND);
+        }
+      });
+    } else {
+      commit('setMessage', KEYWORDS_REQUIRED);
+    }
     store.commit('completeLoad');
   },
   async fetchLyrics({ commit }, payload) {

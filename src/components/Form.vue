@@ -3,8 +3,18 @@
     <template v-if="isLoggedin">
       <v-card-text>
         <v-form>
-          <v-textarea v-model="selectedWords" label="選択中の歌詞" readonly></v-textarea>
-          <v-textarea v-model="typedText" label="歌詞へのコメント" outline></v-textarea>
+          <v-textarea
+            v-model="selectedWords"
+            label="選択中の歌詞"
+            readonly
+            placeholder="表示されている歌詞を選択すると自動的にかきこまれます！"
+          ></v-textarea>
+          <v-textarea
+            v-model="typedText"
+            label="歌詞へのコメント"
+            outline
+            placeholder="歌詞に対する感想・考察かきましょう！"
+          ></v-textarea>
           <Loading v-if="isLoading"></Loading>
           <template v-else>
             <v-btn class="accent" @click="onSendForm()">投稿</v-btn>
