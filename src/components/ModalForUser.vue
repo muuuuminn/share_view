@@ -14,11 +14,11 @@
             <v-card-title>
               マイプロフィール
             </v-card-title>
-            <v-card-media>
+            <v-responsive>
               <v-avatar class="mr-2">
                 <img :src="user.image" alt="プロフィール画像" />
               </v-avatar>
-            </v-card-media>
+            </v-responsive>
             <v-card-text>
               {{ user.name }}
             </v-card-text>

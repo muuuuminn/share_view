@@ -29,19 +29,34 @@ exports.fetchLyrics = functions.https.onCall((data, context) => {
 const admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore();
-const DOCUMENT_PATH = 'users/{user_id}/posts/{post_id}';
+const USERS_POSTS_PATH = 'users/{user_id}/posts/{post_id}';
 
 exports.copyUsersPostCreate = functions.firestore
-  .document(DOCUMENT_PATH)
+  .document(USERS_POSTS_PATH)
   .onCreate((snapshot, context) => {
     copyUsersPostToRootPosts(snapshot, context);
   });
 
 exports.copyUsersPostUpdate = functions.firestore
-  .document(DOCUMENT_PATH)
+  .document(USERS_POSTS_PATH)
   .onUpdate((change, context) => {
     copyUsersPostToRootPosts(change.after, context);
   });
+
+exports.usersPostDelete = functions.firestore
+  .document(USERS_POSTS_PATH)
+  .onDelete((snapshot, context) => {
+    deleteRootPost(snapshot, context);
+  });
+
+const deleteRootPost = function(snapshot, context) {
+  const post_id = context.params.post_id;
+  console.log(context);
+  firestore
+    .collection('posts')
+    .doc(post_id)
+    .delete();
+};
 
 const copyUsersPostToRootPosts = function(snapshot, context) {
   const post_id = snapshot.id;
@@ -53,3 +68,21 @@ const copyUsersPostToRootPosts = function(snapshot, context) {
     .doc(post_id)
     .set(post, { merge: true });
 };
+
+// const ROOT_POSTS_PATH = 'posts/{post_id}';
+
+// exports.deleteUsersPosts = functions.firestore
+//   .document(ROOT_POSTS_PATH)
+//   .onDelete((snapshot, context) => {
+//     console.log(context.auth);
+//     const user_id = context.auth.id;
+//     const post_id = context.params.post_id;
+//     console.log(user_id);
+//     console.log(post_id);
+//     firestore
+//       .collection('users')
+//       .doc(user_id)
+//       .collection('post')
+//       .doc(post_id)
+//       .delete();
+//   });
