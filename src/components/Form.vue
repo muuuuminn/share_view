@@ -13,7 +13,7 @@
             v-model="typedText"
             label="歌詞へのコメント"
             outline
-            placeholder="歌詞に対する感想・考察かきましょう！"
+            placeholder="歌詞に対する感想・考察をかきましょう！"
           ></v-textarea>
           <Loading v-if="isLoading"></Loading>
           <template v-else>
