@@ -22,7 +22,6 @@
               {{ post.view }}
             </v-card-text>
             <v-card-text>
-              <v-spacer></v-spacer>
               {{ post.created_at.toDate().toLocaleString() }}
               <v-icon color="red" @click="onDeletePost(post)" small>delete</v-icon>
             </v-card-text>
@@ -42,9 +41,9 @@ export default {
   computed: {
     ...mapState('auth', ['user']),
     ...mapState('song', ['song']),
+    ...mapState('modal', ['modalName']),
     ...mapGetters('timeline', ['sortPosts']),
     ...mapGetters('usersPosts', ['sortUsersPosts']),
-    ...mapState('modal', ['modalName']),
     posts() {
       switch (this.modalName) {
         case 'ModalForLyrics':
@@ -68,7 +67,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('timeline', ['fetchPosts', 'deletePost']),
+    ...mapActions('timeline', ['fetchPosts', 'deletePost', 'nowLoading']),
     onDeletePost(post) {
       const isDelete = confirm(`${post.view}を削除しますか`);
       if (isDelete) {

@@ -6,6 +6,7 @@ import timeline from './modules/timeline';
 import modal from './modules/modal';
 import form from './modules/form';
 import usersPosts from './modules/usersPosts';
+import snackbar from './modules/snackbar';
 import { vuexfireMutations } from 'vuexfire';
 
 Vue.use(Vuex);
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     modal,
     form,
     usersPosts,
+    snackbar,
   },
   mutations,
   state,

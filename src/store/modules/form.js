@@ -36,6 +36,10 @@ const actions = {
       .doc(post.post_id)
       .set(post, { merge: true });
     store.commit('completeLoad');
+    store.dispatch('snackbar/fireSnackbar', {
+      message: 'メッセージ投稿完了！！',
+      color: 'success',
+    });
   },
   clearSelectedWords({ commit }) {
     commit('clearSelectedWords');
