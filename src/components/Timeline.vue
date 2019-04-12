@@ -1,33 +1,37 @@
 <template>
-  <v-list class="timeline" three-line>
-    <h2 class="warning--text" v-if="message">{{ message }}</h2>
-    <template v-for="(post, index) in posts" v-else>
-      <v-list-tile :key="post.post_id" avatar>
-        <v-list-tile-avatar>
-          <v-avatar>
-            <v-img :src="post.authorRef ? post.authorRef.image : user.image"></v-img>
-          </v-avatar>
-        </v-list-tile-avatar>
-        <v-list-tile-content>
-          <v-list-tile-sub-title class="text--primary font-italic ma-1">
-            <strong>『{{ post.lyrics }}』</strong>
-          </v-list-tile-sub-title>
-          <v-list-tile-sub-title class="text--primary font-weight-bold ma-1">
-            {{ post.view }}
-          </v-list-tile-sub-title>
-          <v-list-tile-sub-title>
-            <span>
-              {{ post.authorRef ? post.authorRef.name : user.name }}
-            </span>
-            <v-spacer></v-spacer>
-            {{ post.created_at.toDate().toLocaleString() }}
-            <v-icon color="red" @click="onDeletePost(post)" small>delete</v-icon>
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-      <v-divider :key="index"></v-divider>
-    </template>
-  </v-list>
+  <v-content class="timeline">
+    <v-container fluid>
+      <v-layout column>
+        <v-flex v-if="message">
+          <h2 class="warning--text">{{ message }}</h2>
+        </v-flex>
+        <v-flex v-for="(post, index) in posts" :key="index" v-else>
+          <v-card flat>
+            <v-responsive>
+              <v-avatar>
+                <v-img :src="post.authorRef ? post.authorRef.image : user.image"></v-img>
+              </v-avatar>
+              <span>
+                {{ post.authorRef ? post.authorRef.name : user.name }}
+              </span>
+            </v-responsive>
+            <v-card-title>
+              <strong>『{{ post.lyrics }}』</strong>
+            </v-card-title>
+            <v-card-text>
+              {{ post.view }}
+            </v-card-text>
+            <v-card-text>
+              <v-spacer></v-spacer>
+              {{ post.created_at.toDate().toLocaleString() }}
+              <v-icon color="red" @click="onDeletePost(post)" small>delete</v-icon>
+            </v-card-text>
+          </v-card>
+          <v-divider :key="post.post_id"></v-divider>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
