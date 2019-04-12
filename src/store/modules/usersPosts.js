@@ -22,12 +22,6 @@ const actions = {
       .orderBy('updated_at', 'desc');
     bindFirestoreRef('usersPosts', usersPosts);
   }),
-  fetchUsersPosts2(user) {
-    const userRef = users
-      .doc(user.user_id)
-      .collection('posts')
-      .orderBy('updated_at', 'desc');
-  },
 };
 
 export default {

@@ -1,6 +1,7 @@
 <template>
   <v-list class="timeline" three-line>
-    <template v-for="(post, index) in posts">
+    <h2 class="warning--text" v-if="message">{{ message }}</h2>
+    <template v-for="(post, index) in posts" v-else>
       <v-list-tile :key="post.post_id" avatar>
         <v-list-tile-avatar>
           <v-avatar>
@@ -47,8 +48,14 @@ export default {
         case 'ModalForUser':
           return this.sortUsersPosts;
         default:
-          return '';
+          return [];
       }
+    },
+    message() {
+      if (this.posts.length == 0) {
+        return 'この歌詞のはじめの投稿者になりませんか！？';
+      }
+      return '';
     },
   },
   watch: {
