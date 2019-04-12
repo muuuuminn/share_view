@@ -1,6 +1,7 @@
 import { firestoreAction } from 'vuexfire';
 import firebase from '@/firebase';
 import db from '@/db';
+import store from '@/store';
 
 const posts = db.collection('posts');
 const users = db.collection('users');
@@ -20,7 +21,7 @@ const getters = {
 const actions = {
   fetchPosts: firestoreAction(({ bindFirestoreRef }, song_id) => {
     const query = posts.where('song_id', '==', song_id);
-    bindFirestoreRef('posts', query);
+    bindFirestoreRef('posts', query).then(() => {});
   }),
   deletePost(_, post_id) {
     const uid = firebase.auth().currentUser.uid;
@@ -28,13 +29,15 @@ const actions = {
       .doc(uid)
       .collection('posts')
       .doc(post_id)
-
       .delete()
       .then(function() {
-        console.log('削除に成功しました');
+        store.dispatch('snackbar/fireSnackbar', {
+          message: '削除完了！',
+          color: 'warning',
+        });
       })
       .catch(function(error) {
-        console.log(error);
+        alert(error);
       });
   },
 };
