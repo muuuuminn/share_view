@@ -55,8 +55,10 @@ export default {
       }
     },
     message() {
-      if (this.posts.length == 0) {
+      if (this.posts.length == 0 && this.modalName == 'ModalForLyrics') {
         return 'この歌詞のはじめの投稿者になりませんか！？';
+      } else if (this.posts.length == 0 && this.modalName == 'ModalForUser') {
+        return '投稿はありません。';
       }
       return '';
     },
