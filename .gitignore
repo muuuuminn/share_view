@@ -28,3 +28,4 @@ firestore.indexes.json
 client_secret.json
 share-lyrics-view.json
 firebase.js
+yarn.lock
